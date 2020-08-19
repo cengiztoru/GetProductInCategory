@@ -11,6 +11,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:scrollbarSize="2dp"
+            android:scrollbarThumbVertical="@android:color/holo_orange_dark"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
