@@ -32,7 +32,7 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         liveDataSource = itemDataSourceFactory.getItemLiveDataSource()
         val config: PagedList.Config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setPageSize(ItemDataSource.Companion.PAGE_SIZE)
+            .setPageSize(3)    //Defines the number of items loaded at once from the DataSource.
             .build()
         itemPagedList = LivePagedListBuilder(itemDataSourceFactory, config).build()
     }
