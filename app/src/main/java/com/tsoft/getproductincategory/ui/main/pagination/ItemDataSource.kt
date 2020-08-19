@@ -19,12 +19,13 @@ import kotlinx.coroutines.launch
 class ItemDataSource(private val services: Services) :
     PageKeyedDataSource<Integer, ProductResponse.Data>() {
 
-    private val FIRST_PAGE = 1
+    private var page = 1
+    private val PERPAGE = 6
 
     fun getDefaultFields(): HashMap<String, String> {
         val fields = HashMap<String, String>()
         fields.put("category", "212")         //For getting more data, you can comment here
-        fields.put("perPage", "6")
+        fields.put("perpage", PERPAGE.toString())
         fields.put("token", SharedAdapter.getString(AppConstants.USER_TOKEN, ""))
         return fields
     }
@@ -34,12 +35,12 @@ class ItemDataSource(private val services: Services) :
         callback: LoadInitialCallback<Integer, ProductResponse.Data>
     ) {
         val fields = getDefaultFields()
-        fields.put("pg", (FIRST_PAGE).toString())
+        fields.put("pg", (page).toString())
 
         GlobalScope.launch {
             services.getProducts(fields).body()?.data.let {
                 if (it != null) {
-                    callback.onResult(it, null, Integer(FIRST_PAGE + 1))
+                    callback.onResult(it, null, Integer(page))
                 }
             }
         }
@@ -58,9 +59,9 @@ class ItemDataSource(private val services: Services) :
         params: LoadParams<Integer>,
         callback: LoadCallback<Integer, ProductResponse.Data>
     ) {
-
+        page++
         val fields = getDefaultFields()
-        fields.put("pg", (params.key).toString())
+        fields.put("pg", page.toString())
 
         GlobalScope.launch {
             val response = services.getProducts(fields).body()
