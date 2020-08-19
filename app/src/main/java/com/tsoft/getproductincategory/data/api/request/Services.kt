@@ -9,10 +9,11 @@ import retrofit2.http.*
 interface Services {
 
     //auth/login/appmobile/appmobile?pass=112233
+    @FormUrlEncoded
     @POST("auth/login/appmobile/{user}")
     suspend fun userLogin(
         @Path("user") user: String,           //URL PARAMETER
-        @Query("pass") pass: String            //POST PARAMETER
+        @Field("pass") pass: String
     ): Response<UserLoginResponse>
 
     @FormUrlEncoded
